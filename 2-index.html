@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>فاضل إيه؟ | عدّاد المناسبات</title>
+<meta name="description" content="اعمل عدّاد لأي مناسبة — فرح، سفر، امتحان، رمضان — وشارك اللينك مع اللي تحب.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1220;--bg2:#171b31;--card:#1d2242;--line:#2b3160;--txt:#e8eaf6;--dim:#8b90b8;--acc:#ffd166;--acc2:#7c5cff;--ok:#4ade80}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:radial-gradient(1200px 700px at 80% -10%,#252b55 0%,var(--bg) 55%);color:var(--txt);font-family:'Tajawal',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:14px 12px 40px}
+.wrap{width:100%;max-width:620px}
+header{text-align:center;margin-bottom:14px}
+.brand{font-size:26px;font-weight:800}
+.brand span{color:var(--acc)}
+.sub{color:var(--dim);font-size:13px;margin-top:4px}
+.countBox{background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:26px 16px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+.countBox.th1{background:linear-gradient(160deg,#1d2242,#311b92)}
+.countBox.th2{background:linear-gradient(160deg,#7f1d1d,#311b92)}
+.countBox.th3{background:linear-gradient(160deg,#14532d,#0c4a6e)}
+.countBox.th4{background:linear-gradient(160deg,#831843,#1d2242)}
+#cTitle{font-size:22px;font-weight:800;margin-bottom:16px}
+.units{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.u{background:#00000035;border:1px solid #ffffff22;border-radius:14px;padding:10px 8px;min-width:74px}
+.u .n{font-size:34px;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums}
+.u .t{font-size:12px;color:var(--txt);opacity:.75}
+#sub2{margin-top:12px;color:var(--dim);font-size:13px}
+#arrived{display:none;font-size:26px;font-weight:800;color:var(--ok);margin-top:10px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:14px}
+.lbl{font-size:13px;color:var(--dim);font-weight:700;margin:10px 0 6px}
+.lbl:first-child{margin-top:0}
+.txtin{width:100%;font-family:inherit;font-size:15px;background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:10px 14px;color:var(--txt)}
+input[type=datetime-local]{font-family:inherit}
+.ths{display:flex;gap:8px;flex-wrap:wrap}
+.th{width:52px;height:40px;border-radius:10px;cursor:pointer;border:2px solid transparent}
+.th.on{border-color:var(--acc)}
+.th0{background:var(--bg2)}.th1{background:linear-gradient(135deg,#1d2242,#311b92)}
+.th2{background:linear-gradient(135deg,#7f1d1d,#311b92)}.th3{background:linear-gradient(135deg,#14532d,#0c4a6e)}
+.th4{background:linear-gradient(135deg,#831843,#1d2242)}
+.presets{display:flex;gap:6px;flex-wrap:wrap}
+.presets button{font-family:inherit;font-size:12px;background:var(--bg2);border:1px solid var(--line);color:var(--dim);border-radius:9px;padding:6px 12px;cursor:pointer}
+.presets button:hover{color:var(--acc);border-color:var(--acc)}
+.btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{font-family:inherit;font-size:14px;font-weight:800;border:none;border-radius:11px;padding:10px 18px;cursor:pointer}
+.btn.p{background:var(--acc);color:#1a1300}
+.btn.s{background:var(--bg2);color:var(--txt);border:1px solid var(--line)}
+.btn.danger{color:#f87171}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer}
+.item:hover{border-color:var(--acc)}
+.item .nm{font-weight:700;font-size:14px}
+.item .dt{font-size:12px;color:var(--dim)}
+.item button{background:none;border:none;color:var(--dim);cursor:pointer;font-size:15px}
+.item button:hover{color:#f87171}
+footer{margin-top:22px;text-align:center;color:var(--dim);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">فاضل <span>إيه؟</span></div>
+  <div class="sub">عدّاد لأي مناسبة — وشاركه بلينك واحد</div>
+</header>
+<div class="countBox th1" id="countBox">
+  <div id="cTitle">مناسبة جديدة</div>
+  <div class="units">
+    <div class="u"><div class="n" id="uD">0</div><div class="t">يوم</div></div>
+    <div class="u"><div class="n" id="uH">0</div><div class="t">ساعة</div></div>
+    <div class="u"><div class="n" id="uM">0</div><div class="t">دقيقة</div></div>
+    <div class="u"><div class="n" id="uS">0</div><div class="t">ثانية</div></div>
+  </div>
+  <div id="sub2"></div>
+  <div id="arrived">وصلت المناسبة! 🎉</div>
+</div>
+<div class="panel">
+  <div class="lbl">اسم المناسبة</div>
+  <input class="txtin" id="fTitle" maxlength="40" placeholder="مثال: فرح أحمد 🎊">
+  <div class="lbl">التاريخ والوقت</div>
+  <input class="txtin" type="datetime-local" id="fDate">
+  <div class="lbl">الشكل</div>
+  <div class="ths" id="ths"></div>
+  <div class="lbl">مناسبات جاهزة</div>
+  <div class="presets" id="presets"></div>
+  <div class="btns">
+    <button class="btn p" id="saveBtn">💾 احفظ واعرض</button>
+    <button class="btn s" id="shareBtn">🔗 انسخ لينك المشاركة</button>
+  </div>
+</div>
+<div class="panel" id="listPanel" style="display:none">
+  <div class="lbl">عدّاداتك المحفوظة</div>
+  <div class="list" id="list"></div>
+</div>
+<footer>العدّاد بيشتغل على جهازك — اللينك بيحمل التاريخ بس، مفيش سيرفر</footer>
+</div>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const LS="countdown-ar-v1";
+let cur={title:"مناسبة جديدة",date:null,th:1};
+function loadList(){try{return JSON.parse(localStorage.getItem(LS)||"[]")}catch(e){return[]}}
+function saveList(l){try{localStorage.setItem(LS,JSON.stringify(l))}catch(e){}}
+function nextDate(m,d){
+  const now=new Date();
+  let y=now.getFullYear();
+  let t=new Date(y,m-1,d,0,0,0);
+  if(t<now)t=new Date(y+1,m-1,d,0,0,0);
+  return t;
+}
+function ramadan(){
+  // approximate: Ramadan 1448 starts ~ Feb 18 2027, 1447 ~ Feb 8 2026
+  const now=new Date();
+  for(const d of ["2026-02-18T00:00","2027-02-07T00:00","2028-01-27T00:00"]){
+    const t=new Date(d);if(t>now)return t;
+  }
+  return nextDate(2,18);
+}
+const PRESETS={
+"🌙 رمضان":()=>({title:"رمضان 🌙",date:ramadan()}),
+"🎄 رأس السنة":()=>({title:"رأس السنة 🎆",date:nextDate(1,1)}),
+"💍 فرحي":()=>({title:"فرحي 💍",date:null}),
+"✈️ سفري":()=>({title:"سفري ✈️",date:null}),
+"📚 الامتحانات":()=>({title:"الامتحانات 📚",date:null})
+};
+function apply(c){
+  cur=c;
+  $("cTitle").textContent=c.title||"مناسبة جديدة";
+  $("countBox").className="countBox th"+(c.th||1);
+  $("fTitle").value=c.title||"";
+  $("fDate").value=c.date||"";
+  document.querySelectorAll(".th").forEach(e=>e.classList.toggle("on",+e.dataset.th===(c.th||1)));
+  tick();
+}
+function tick(){
+  const dv=$("fDate").value;
+  const t=dv?new Date(dv):null;
+  if(!t||isNaN(t)){
+    $("uD").textContent="--";$("uH").textContent="--";$("uM").textContent="--";$("uS").textContent="--";
+    $("sub2").textContent="اختار التاريخ عشان يبدأ العد";
+    $("arrived").style.display="none";return;
+  }
+  let ms=t-Date.now();
+  if(ms<=0){
+    $("uD").textContent="0";$("uH").textContent="0";$("uM").textContent="0";$("uS").textContent="0";
+    $("arrived").style.display="block";
+    $("sub2").textContent=t.toLocaleDateString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+    return;
+  }
+  $("arrived").style.display="none";
+  const d=Math.floor(ms/86400000);ms-=d*86400000;
+  const h2=Math.floor(ms/3600000);ms-=h2*3600000;
+  const m=Math.floor(ms/60000);ms-=m*60000;
+  const s=Math.floor(ms/1000);
+  $("uD").textContent=d;$("uH").textContent=h2;$("uM").textContent=m;$("uS").textContent=s;
+  $("sub2").textContent=t.toLocaleDateString("ar-EG",{weekday:"long",year:"numeric",month:"long",day:"numeric"})+" — "+t.toLocaleTimeString("ar-EG",{hour:"2-digit",minute:"2-digit"});
+}
+setInterval(()=>{if($("fDate").value)tick()},1000);
+$("fTitle").oninput=()=>{$("cTitle").textContent=$("fTitle").value||"مناسبة جديدة";cur.title=$("fTitle").value};
+$("fDate").onchange=()=>{cur.date=$("fDate").value;tick()};
+const ths=$("ths");
+[0,1,2,3,4].forEach(i=>{
+  const d=document.createElement("div");
+  d.className="th th"+i+(i===1?" on":"");d.dataset.th=i;
+  d.onclick=()=>{cur.th=i;document.querySelectorAll(".th").forEach(e=>e.classList.remove("on"));d.classList.add("on");$("countBox").className="countBox th"+i};
+  ths.appendChild(d);
+});
+const ps=$("presets");
+for(const name in PRESETS){
+  const b=document.createElement("button");b.textContent=name;
+  b.onclick=()=>{
+    const p=PRESETS[name]();
+    if(p.title)$("fTitle").value=p.title,$("cTitle").textContent=p.title,cur.title=p.title;
+    if(p.date){
+      const iso=new Date(p.date.getTime()-p.date.getTimezoneOffset()*60000).toISOString().slice(0,16);
+      $("fDate").value=iso;cur.date=iso;
+    }
+    tick();
+  };
+  ps.appendChild(b);
+}
+function shareURL(){
+  const t=$("fTitle").value.trim(),d=$("fDate").value;
+  if(!d)return null;
+  return location.origin+location.pathname+"#t="+encodeURIComponent(t||"مناسبة")+"&d="+encodeURIComponent(d)+"&th="+(cur.th||1);
+}
+$("saveBtn").onclick=()=>{
+  const t=$("fTitle").value.trim(),d=$("fDate").value;
+  if(!t||!d){$("saveBtn").textContent="اكتب الاسم والتاريخ الأول";setTimeout(()=>$("saveBtn").textContent="💾 احفظ واعرض",1800);return}
+  const l=loadList().filter(x=>!(x.title===t&&x.date===d));
+  l.unshift({title:t,date:d,th:cur.th||1});
+  while(l.length>8)l.pop();
+  saveList(l);renderList();
+  $("saveBtn").textContent="✅ اتحفظ!";
+  setTimeout(()=>$("saveBtn").textContent="💾 احفظ واعرض",1600);
+};
+$("shareBtn").onclick=async()=>{
+  const u=shareURL();
+  if(!u){$("shareBtn").textContent="اختار التاريخ الأول";setTimeout(()=>$("shareBtn").textContent="🔗 انسخ لينك المشاركة",1800);return}
+  const txt="فاضل على \""+($("fTitle").value.trim()||"مناسبة")+"\": "+u;
+  try{await navigator.clipboard.writeText(txt);$("shareBtn").textContent="✅ اللينك اتنسخ!"}
+  catch(e){$("shareBtn").textContent=u}
+  setTimeout(()=>$("shareBtn").textContent="🔗 انسخ لينك المشاركة",2200);
+};
+function renderList(){
+  const l=loadList();
+  $("listPanel").style.display=l.length?"block":"none";
+  const el=$("list");el.innerHTML="";
+  l.forEach((c,i)=>{
+    const d=document.createElement("div");d.className="item";
+    const info=document.createElement("div");
+    info.innerHTML='<div class="nm">'+c.title+'</div><div class="dt">'+new Date(c.date).toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"})+'</div>';
+    info.onclick=()=>apply(c);
+    const x=document.createElement("button");x.textContent="🗑️";
+    x.onclick=e=>{e.stopPropagation();const l2=loadList();l2.splice(i,1);saveList(l2);renderList()};
+    d.appendChild(info);d.appendChild(x);el.appendChild(d);
+  });
+}
+// load from share link
+(function(){
+  try{
+    const h=location.hash.slice(1);
+    const p=new URLSearchParams(h);
+    if(p.get("d")){
+      apply({title:p.get("t")||"مناسبة",date:p.get("d"),th:+(p.get("th")||1)});
+      return;
+    }
+  }catch(e){}
+  const l=loadList();
+  if(l.length)apply(l[0]);
+})();
+renderList();tick();
+</script>
+</body>
+</html>
