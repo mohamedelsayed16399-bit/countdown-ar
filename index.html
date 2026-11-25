@@ -110,9 +110,9 @@ function nextDate(m,d){
   return t;
 }
 function ramadan(){
-  // approximate: Ramadan 1448 starts ~ Feb 18 2027, 1447 ~ Feb 8 2026
+  // approximate (moon sighting may shift by a day): 2027-02-08, 2028-01-28, 2029-01-16
   const now=new Date();
-  for(const d of ["2026-02-18T00:00","2027-02-07T00:00","2028-01-27T00:00"]){
+  for(const d of ["2026-02-18T00:00","2027-02-08T00:00","2028-01-28T00:00","2029-01-16T00:00"]){
     const t=new Date(d);if(t>now)return t;
   }
   return nextDate(2,18);
